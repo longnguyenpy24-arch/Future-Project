@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.text.TextFlow?>
+
+<?import javafx.scene.control.ScrollPane?>
+<HBox xmlns:fx="http://javafx.com/fxml" id="mainHorizontalBox" fx:controller="org.cs2.HelloController">
+  <VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml" styleClass="mainVerticalBar" >
+
+    <Label styleClass="Title"> Documents </Label>
+    <HBox styleClass="row">
+      <Label styleClass="styleText">Name: </Label>
+      <TextArea fx:id="nameOfTab" styleClass="textArea"/>
+    </HBox>
+
+    <Button fx:id = "handleAddTab" styleClass = "styleButton" onAction= "#handleAddTab">Add Tab</Button>
+
+    <TabPane fx:id = "tabPane" VBox.vgrow="NEVER">
+
+    </TabPane>
+
+    <HBox styleClass = "row" fx:id="initialInputTextBox">
+      <Button fx:id="titleSubmitButton" styleClass = "styleButton" onAction="#submitInput"> Submit Title </Button>
+      <Button fx:id="headerSubmitButton" styleClass = "styleButton" onAction="#submitInput"> Submit Header </Button>
+      <Button fx:id="commentarySubmitButton" styleClass = "styleButton" onAction="#submitInput"> Submit Commentary </Button>
+      <Button fx:id="lineBreakSubmitButton" styleClass = "styleButton" onAction="#submitInput"> Submit Line Break </Button>
+    </HBox>
+    <HBox styleClass = "row" fx:id="changeTextBox">
+      <Button styleClass="styleButton" onAction="#deleteText">Delete Text</Button>
+      <Button styleClass="styleButton" onAction="#submitText">Submit Text</Button>
+    </HBox>
+      <TextArea fx:id="inputText" id="inputText"/>
+
+  </VBox>
+
+  <VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml" styleClass="mainVerticalBar" HBox.hgrow="ALWAYS">
+
+    <Label  styleClass="Title">Notes</Label>
+    <ScrollPane id="Scroll" fitToWidth="true"  VBox.vgrow="ALWAYS">
+
+      <TextFlow fx:id="Notes" id="Notes">
+
+      </TextFlow>
+    </ScrollPane>
+
+  </VBox>
+</HBox>
