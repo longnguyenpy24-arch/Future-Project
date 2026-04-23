@@ -26,7 +26,7 @@ public class TabCustomClass {
 
     public String getColorStyleClass(){
         return colorStyleClass;
-        // USE THIS TO FILL COLOR OF STACKPANE OF EVIDENCE
+        // USE THIS TO FILL COLOR OF StackPane OF EVIDENCE
     }
 
     public Tab getTab(){
@@ -38,7 +38,7 @@ public class TabCustomClass {
         // USE THIS TO LABEL EVIDENCE
     }
     private void createPdf(VBox mainContent) throws IOException {
-        new PdfModule(mainContent, mainContent.getScene().getWindow(), this, scrollPane);
+        new PdfModule(mainContent, mainContent.getScene().getWindow(), this);
     }
 
     private void createDocX(VBox mainContent){
