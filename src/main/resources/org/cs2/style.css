@@ -110,10 +110,7 @@
     -fx-border-color: black;
     -fx-border-radius: 10;
 }
-.clickedText.commentaryPane {
-    -fx-padding: 10 10 10 10;
-    -fx-border-insets: 0 0 0 45;
-}
+
 .clickedText.headerPane {
     -fx-padding: 10 10 10 10;
     -fx-border-insets: 0 0 0 20;
@@ -121,10 +118,23 @@
 .paneStyle{
     -fx-alignment: TOP_LEFT;
     -fx-padding: 5 10 5 10;
+    -fx-background-radius: 10;
+}
+.clickedText.commentaryPane {
+    -fx-padding: 10 10 10 10;
+    -fx-border-insets: 0 0 0 45;
 }
 .commentaryPane {
     -fx-padding: 10 10 10 60;
     -fx-background-insets: 0 0 0 45;
+}
+.evidencePane {
+    -fx-padding: 10 10 10 50;
+    -fx-background-insets: 0 0 0 35;
+}
+.clickedText.evidencePane {
+    -fx-padding: 10 10 10 10;
+    -fx-border-insets: 0 0 0 35;
 }
 .headerPane {
     -fx-padding: 10 10 10 35;
@@ -163,4 +173,10 @@
 .verticalBoxTabContent {
     -fx-alignment: TOP_LEFT;
     -fx-spacing: 10;
+}
+
+.citationText {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 7px;
+    -fx-font-weight: bold;
 }

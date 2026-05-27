@@ -30,9 +30,13 @@
       <Button fx:id="commentarySubmitButton" styleClass = "styleButton" onAction="#submitInput"> Submit Commentary </Button>
       <Button fx:id="lineBreakSubmitButton" styleClass = "styleButton" onAction="#submitInput"> Submit Line Break </Button>
     </HBox>
-    <HBox styleClass = "row" fx:id="changeTextBox">
+    <HBox styleClass = "row" fx:id="changeNotesBox">
       <Button styleClass="styleButton" onAction="#deleteText">Delete Text</Button>
-      <Button styleClass="styleButton" onAction="#submitText">Submit Text</Button>
+      <Button styleClass="styleButton" onAction="#submitNotesText">Submit Text</Button>
+    </HBox>
+    <HBox styleClass = "row" fx:id = "changeHighlightsBox">
+      <Button styleClass="styleButton" onAction="#deleteText">Delete Highlight</Button>
+      <Button styleClass="styleButton" onAction="#submitHighlightsText">Submit Highlight</Button>
     </HBox>
       <TextArea fx:id="inputText" id="inputText"/>
 

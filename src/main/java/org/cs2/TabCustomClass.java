@@ -1,18 +1,29 @@
 package org.cs2;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TabCustomClass {
     private static int colorCounter = 0;
     private static final String[] colorArr = {"theme-1", "theme-2","theme-3","theme-4","theme-5","theme-6","theme-7","theme-8", "theme-9", "theme-10"};
     private final Tab tab;
     private final String colorStyleClass;
-    private String citation;
+    private final StringProperty citation = new SimpleStringProperty("");
     private ScrollPane scrollPane;
+    private boolean submitted = false;
+    private VBox mainContent;
+    private static final ArrayList<PDDocument> unclosedDocuments = new ArrayList<>();
+
+    public static ArrayList<PDDocument> getUnclosedDocuments() {
+        return unclosedDocuments;
+    }
 
     public TabCustomClass(String nameOfTab){
         tab = new Tab(nameOfTab);
@@ -26,32 +37,34 @@ public class TabCustomClass {
 
     public String getColorStyleClass(){
         return colorStyleClass;
-        // USE THIS TO FILL COLOR OF StackPane OF EVIDENCE
+    }
+
+    ScrollPane getScrollPane(){
+        return scrollPane;
     }
 
     public Tab getTab(){
         return tab;
     }
 
-    public String getCitation() {
+    StringProperty getCitation() {
         return citation;
-        // USE THIS TO LABEL EVIDENCE
     }
     private void createPdf(VBox mainContent) throws IOException {
-        new PdfModule(mainContent, mainContent.getScene().getWindow(), this);
+        new PdfModule(mainContent, mainContent.getScene().getWindow(), scrollPane, this);
     }
 
-    private void createDocX(VBox mainContent){
-        new DocX(mainContent, this);
+    private void createDocX(VBox mainContent) throws IOException {
+        new DocX(mainContent, mainContent.getScene().getWindow(), scrollPane, this);
     }
 
     void initializeTabContent() {
         scrollPane = new ScrollPane();
-        VBox mainContent = new VBox();
+        mainContent = new VBox();
         scrollPane.setContent(mainContent);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
-        mainContent.getStyleClass().addAll(getColorStyleClass(), "verticalBoxTabContent");
+        mainContent.getStyleClass().addAll(colorStyleClass, "verticalBoxTabContent");
         HBox start = new HBox();
         Button uploadPdf = new Button("Upload Pdf");
         Button newDocX = new Button("Upload DOCX");
@@ -63,7 +76,13 @@ public class TabCustomClass {
                 throw new RuntimeException(e);
             }
         });
-        newDocX.setOnAction(_ -> createDocX(mainContent));
+        newDocX.setOnAction(_ -> {
+            try {
+                createDocX(mainContent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         uploadPdf.getStyleClass().add("styleButton");
         newDocX.getStyleClass().add("styleButton");
@@ -90,25 +109,32 @@ public class TabCustomClass {
         updateCitation.getStyleClass().add("styleButton");
 
         citationInput.setTextFormatter(new TextFormatter<String> (change -> {
-            String newText = change.getText();
-            if (change.isAdded()){
-                updateCitation.setText("Add Citation");
-            }
-            if (newText.matches("[0-9 \\w]*")){
+            if (change.getControlNewText().isEmpty() && submitted){
+                updateCitation.setText("Delete Citation");
                 return change;
+            }
+            else{
+                String newText = change.getText();
+                if (change.isAdded()){
+                    updateCitation.setText("Add Citation");
+                }
+                if (newText.matches("[0-9 \\w]*")){
+                    return change;
+                }
             }
             return null;
         }));
-
         updateCitation.setOnAction(_ -> {
             if(updateCitation.getText().equals("Add Citation")){
-                citation = citationInput.getText();
+                citation.set(citationInput.getText());
                 citationInput.clear();
                 updateCitation.setText("Delete Citation");
+                submitted = true;
             }
             else {
                 updateCitation.setText("Add Citation");
-                citation = "";
+                citation.set("");
+                submitted = false;
             }
         });
 
